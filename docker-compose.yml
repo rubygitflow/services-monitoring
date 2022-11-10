@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: node1
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+  filebeat:
+    image: elastic/filebeat:7.17.7
+    container_name: filebeat
+    depends_on:
+      - logstash
+      - elasticsearch
+    volumes:
+      - filebeat:/usr/share/filebeat/data
+      - ./dockers/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /home/itarchitect/Work/Ruby/ads_microservice/log/:/var/log/ads:ro
+      - /home/itarchitect/Work/Ruby/auth_microservice/log/:/var/log/auth:ro
+      - /home/itarchitect/Work/Ruby/geocoder_microservice/log/:/var/log/geocoder:ro
+  elasticsearch:
+    image: elasticsearch:7.17.7
+    container_name: elasticsearch
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
+      - ./dockers/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  logstash:
+    image: logstash:7.17.7
+    container_name: logstash
+    depends_on:
+      - elasticsearch
+    volumes:
+      - logstash:/usr/share/logstash/data
+      - ./dockers/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+  kibana:
+    image: kibana:7.17.7
+    container_name: kibana
+    depends_on:
+      - elasticsearch
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    ports:
+      - 5601:5601
+volumes:
+  rabbitmq:
+  filebeat:
+  elasticsearch:
+  logstash:

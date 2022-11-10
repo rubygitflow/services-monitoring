@@ -1,0 +1,6 @@
+en:
+  model:
+    errors:
+      geocoder:
+        city:
+          blank: 'Enter  city'

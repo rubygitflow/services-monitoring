@@ -1,0 +1,3 @@
+logger:
+  path: log/development.log
+  level: <%= Ougai::Logger::DEBUG %>

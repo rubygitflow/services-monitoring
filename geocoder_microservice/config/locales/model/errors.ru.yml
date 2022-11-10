@@ -1,0 +1,6 @@
+ru:
+  model:
+    errors:
+      geocoder:
+        city:
+          blank: 'Укажите город'

@@ -1,0 +1,11 @@
+en:
+  model:
+    errors:
+      ad:
+        blank: 'Add an advert' 
+        title:
+          blank: 'Add a title'
+        description:
+          blank: 'Add a description'
+        city:
+          blank: 'Add a city'

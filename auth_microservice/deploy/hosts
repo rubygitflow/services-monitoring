@@ -1,0 +1,8 @@
+[app]
+localhost ansible_connection=local
+
+[db]
+localhost ansible_connection=local
+
+[all:vars]
+ansible_user=itarchitect

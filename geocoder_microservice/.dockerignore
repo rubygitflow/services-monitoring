@@ -1,0 +1,4 @@
+.git
+log/*
+deploy/*
+.env.rb

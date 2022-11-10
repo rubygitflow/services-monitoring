@@ -1,0 +1,79 @@
+---
+- hosts: app
+  become: yes
+  gather_facts: no
+  vars:
+    image: geocoder
+    image_tag: latest
+  tasks:
+    - name: setup facts
+      set_fact:
+        timestamp: '{{ lookup("pipe", "date -u +%Y%m%d%H%M%S") }}'
+    # # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html
+    # - name: Print timestamp
+    #   ansible.builtin.debug:
+    #     msg: '{{ timestamp }}'
+    # https://docs.ansible.com/ansible/latest/collections/community/docker/docker_image_module.html#requirements
+    # https://habr.com/ru/company/southbridge/blog/656201/
+    - name: build docker image
+      delegate_to: 127.0.0.1
+      docker_image:
+        name: '{{ image }}'
+        tag: '{{ image_tag }}'
+        build:
+          path: ../
+          pull: no
+        source: build
+        force_source: yes
+        state: present
+    - name: save image to file
+      delegate_to: 127.0.0.1
+      docker_image:
+        name: '{{ image }}'
+        tag: '{{ image_tag }}'
+        archive_path: '{{ image }}.tar'
+        source: local
+    - name: compress image
+      delegate_to: 127.0.0.1
+      archive:
+        path: '{{ image }}.tar'
+        dest: '{{ image }}.tar.gz'
+        remove: yes
+    - name: upload image
+      copy:
+        src: '{{ image }}.tar.gz'
+        dest: '/tmp/{{ timestamp }}-{{ image }}.tar.gz'
+    - name: extract image
+      shell: 'gunzip {{ timestamp }}-{{ image }}.tar.gz'
+      args:
+        chdir: /tmp
+    - name: stop a container
+      docker_container:
+        name: '{{ image }}'
+        state: absent
+    - name: remove old image
+      docker_image:
+        state: absent
+        name: '{{ image }}'
+        tag: '{{ image_tag }}'
+    - name: load image
+      docker_image:
+        name: '{{ image }}'
+        load_path: '/tmp/{{ timestamp }}-{{ image }}.tar'
+        source: load
+        tag: '{{ image_tag }}'
+        force_tag: true
+    - name: remove image file
+      file:
+        path: '/tmp/{{ timestamp }}-{{ image }}.tar'
+        state: absent
+    - name: start docker container
+      docker_container:
+        name: '{{ image }}'
+        image: '{{ image }}'
+        network_mode: host
+        restart_policy: on-failure
+        restart_retries: 1
+        tty: yes
+        env_file: '/home/{{ ansible_user }}/.env'
+        state: started

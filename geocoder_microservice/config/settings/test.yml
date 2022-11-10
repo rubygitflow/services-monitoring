@@ -1,0 +1,3 @@
+logger:
+  path: log/test.log
+  level: <%= Ougai::Logger::FATAL %>

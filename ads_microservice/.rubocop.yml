@@ -1,0 +1,53 @@
+require:
+  - rubocop-rspec
+
+RSpec/ExampleLength:
+  Max: 15
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+
+Layout/ArrayAlignment:
+  Exclude:
+    - db/seeds.rb
+
+Layout/FirstArrayElementIndentation:
+  Exclude:
+    - db/seeds.rb
+
+AllCops:
+  Exclude:
+    - bin/**/*
+    - db/schema.rb
+    - db/migrate/*.rb
+  SuggestExtensions: false
+
+Style/Documentation:
+  Description: 'Document classes and non-namespace modules.'
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 20
+
+Layout/LineLength:
+  Exclude:
+    - .env.rb
+
+Metrics/BlockLength:
+  Exclude:
+    - Rakefile
+    - app/routes/**/*
+
+Naming/MethodParameterName:
+  Enabled: false
+
+Style/ClassVars:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - .env.rb
+
+Metrics/AbcSize:
+  Exclude:
+    - app/lib/auth_service/client.rb

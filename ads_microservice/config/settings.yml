@@ -1,0 +1,13 @@
+app:
+  name: ads
+db:
+  pool: 10
+  timeout: 10000
+  shared_buffers: 512MB
+pagination:
+  page_size: 20
+rabbitmq:
+  consumer_pool: 10
+  host: <%= ENV['RABBITMQ_HOST'] %>
+  username: <%= ENV['RABBITMQ_USER'] %>
+  password: <%= ENV['RABBITMQ_PASSWORD'] %>
