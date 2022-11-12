@@ -2,6 +2,10 @@
 
 require_relative 'config/environment'
 
+use Rack::Runtime
+use Rack::Deflater
+use Prometheus::Middleware::Collector
+use Prometheus::Middleware::Exporter
 use Rack::RequestId
 use Rack::Ougai::LogRequests, AdsMicroservice.logger # logs every request with timing data, request result, etc.
 

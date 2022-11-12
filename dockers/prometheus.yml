@@ -9,6 +9,7 @@ scrape_configs:
       # - targets: ['localhost:9100']
       # for node_exporter on  MacOS
       # - targets: ['host.docker.internal:9100']
-  # - job_name: 'services'
-  #   static_configs:
-  #     - targets: ['host.docker.internal:3000', 'host.docker.internal:3020', 'host.docker.internal:3040']
+  - job_name: 'services'
+    static_configs:
+      - targets: ['172.17.0.1:3000', '172.17.0.1:3001', '172.17.0.1:3002']
+      # - targets: ['localhost:3000', 'localhost:3001', 'localhost:3002']

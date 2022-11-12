@@ -31,6 +31,8 @@ gem 'amazing_print'
 gem 'rack-ougai', require: 'rack/ougai'
 gem 'rack-request-id'
 
+gem 'prometheus-client'
+
 group :development do
   gem 'pry'
 end
