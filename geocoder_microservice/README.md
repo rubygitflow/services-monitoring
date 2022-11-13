@@ -33,13 +33,13 @@ $ bundle install
 You can either set up configuration into `config/initializers/config.rb`, `config/settings/*.yml` and `config/settings.yml` or `config/settings.local.yml` before running
 
 ```bash
-$ bin/app
+$ bin/puma
 $ bin/console
 ```
 or run the application with modified configuration using environment variables as well
 ```bash
 $ RACK_ENV=test bin/console
-$ LOG_SERVICE=stdout bin/app
+$ LOG_SERVICE=stdout bin/puma
 ```
 
 ## Run tests

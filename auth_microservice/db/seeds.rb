@@ -2,6 +2,7 @@
 
 old_user_ids = User.where(name: 'admin').map(:id)
 return unless old_user_ids.size.zero?
+
 user = User.new
 user.name = 'admin'
 user.email = 'admin@example.com'

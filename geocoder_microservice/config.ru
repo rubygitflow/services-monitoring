@@ -2,11 +2,7 @@
 
 require_relative 'config/environment'
 
-dev = ENV['RACK_ENV'] == 'development'
+use Rack::Deflater
+use Prometheus::Middleware::Exporter
 
-run(dev ? Unreloader : GeocoderMicroservice.freeze.app)
-
-# # We can write this if we only have one route in our microservice
-# map '/api/v1/' do
-#   run(dev ? Unreloader : GeocoderMicroservice.freeze.app)
-# end
+run proc() { [200, { 'Content-Type:' => 'text/html' }, ['OK']] }
