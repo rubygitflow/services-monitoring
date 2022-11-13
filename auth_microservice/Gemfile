@@ -26,8 +26,8 @@ gem 'jwt'
 
 gem 'bunny'
 
-gem 'ougai', require: 'ougai'
 gem 'amazing_print'
+gem 'ougai', require: 'ougai'
 gem 'rack-ougai', require: 'rack/ougai'
 gem 'rack-request-id'
 

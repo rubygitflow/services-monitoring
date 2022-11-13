@@ -4,6 +4,9 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
+gem 'puma'
+gem 'rack'
+
 gem 'rake'
 
 gem 'config'
@@ -19,8 +22,10 @@ gem 'faraday'
 
 gem 'bunny'
 
-gem 'ougai', require: 'ougai'
 gem 'amazing_print'
+gem 'ougai', require: 'ougai'
+
+gem 'prometheus-client'
 
 group :development do
   gem 'pry'
